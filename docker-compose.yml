@@ -1,0 +1,22 @@
+# @author ~ Akhil Suseelan
+version: '3.1'
+services:
+  springboot:
+    build: .
+    restart: always
+    container_name: springboot_actuator
+    ports:
+      - 8080:8080
+    working_dir: /opt/app
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    container_name: springboot-mongo
+    #    ports:  # for demo/debug purpose only
+    #      - 27018:27017
+    volumes:
+      - $HOME/data/springboot-mongo-data:/data/db
+      - $HOME/data/springboot-mongo-bkp:/data/bkp
+    restart: always
