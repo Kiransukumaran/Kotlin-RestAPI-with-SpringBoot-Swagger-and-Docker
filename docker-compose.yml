@@ -1,5 +1,6 @@
 # @author ~ Akhil Suseelan
 version: '3.1'
+
 services:
   springboot:
     build: .
@@ -20,3 +21,24 @@ services:
       - $HOME/data/springboot-mongo-data:/data/db
       - $HOME/data/springboot-mongo-bkp:/data/bkp
     restart: always
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana-dashboard
+    ports:
+      - 3000:3000
+    working_dir: /opt/app
+    depends_on:
+      - prometheus
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus-datastore
+    volumes:
+      - /home/pivot/Workspace/03 - book-backend with tests/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+    restart: always
+
+
+
